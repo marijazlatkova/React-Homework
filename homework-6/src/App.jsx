@@ -19,8 +19,9 @@ export const App = () => {
 
   const [newTodo, setNewTodo] = useState("");
   const [showCompletedTodos, setShowCompletedTodos] = useState(true);
+  const [editTodo, setEditTodo] = useState(null);
 
-  //* dodavanje na novo todo
+  //! dodavanje na novo todo
   function addNewTodo() {
     if (newTodo.trim() !== "") {
       let newObject = {
@@ -37,7 +38,7 @@ export const App = () => {
     }
   }
 
-  //* stikliranje na todo za zavrsheno
+  //! stikliranje na todo za zavrsheno
   function markTodoAsDone(todo) {
     setTodos([
       ...todos.map((item) =>
@@ -48,19 +49,35 @@ export const App = () => {
     ]);
   }
 
-  //* editiranje na todo
-  function editTodo(id, newText) {
-    setTodos((todos) =>
-      todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
-    );
+  //! editiranje na todo
+
+  //* zapocnuvanje na izmenata
+  function handleEdit(id, text) {
+    setEditTodo({ id, text });
   }
 
-  //* brishenje na todo
+  //* zacuvuvanje na izmenata
+  function handleSave() {
+    if (editTodo) {
+      const updatedTodos = todos.map((todo) =>
+        todo.id === editTodo.id ? { ...todo, text: editTodo.text } : todo
+      );
+      setTodos(updatedTodos);
+      setEditTodo(null);
+    }
+  }
+
+  //* otkazuvanje na izmenata
+  function handleCancel() {
+    setEditTodo(null);
+  }
+
+  //! brishenje na todo
   function deleteTodo(id) {
     setTodos(todos.filter((todo) => todo.id !== id));
   }
 
-  //* counter za kolku tasks imame completed
+  //! counter za kolku tasks imame completed
   const completedElements = todos.filter((todo) => todo.done).length;
 
   return (
@@ -88,6 +105,9 @@ export const App = () => {
           }
           markTodoAsDone={markTodoAsDone}
           deleteTodo={deleteTodo}
+          handleEdit={handleEdit}
+          handleSave={handleSave}
+          handleCancel={handleCancel}
           editTodo={editTodo}
         />
       )}
