@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Input } from "./Input";
+import { Dropdown } from "./Dropdown";
 
 const elements = [
   { value: "Facebook", name: "Facebook" },
@@ -62,16 +63,11 @@ export const Login = () => {
             setPassword(e.target.value);
           }}
         />
-        <div>
-          <select value={selectedOption} onChange={handleOptionChange}>
-            <option>Select an option</option>
-            {elements.map((element) => (
-              <option key={element.value} value={element.value}>
-                {element.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Dropdown
+          elements={elements}
+          selectedOption={selectedOption}
+          onChange={handleOptionChange}
+        />
         {isTextarea ? (
           <textarea
             placeholder={"Enter Comment"}
