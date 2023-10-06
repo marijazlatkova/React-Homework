@@ -5,10 +5,10 @@ export const NotFound = () => {
     <div id="not-found">
       <h2>Error!!! No Routes match this URL</h2>
       <h3>
-        Go
+        Go{" "}
         <Link to="/">
           <u>back</u>
-        </Link>
+        </Link>{" "}
         to Home Page
       </h3>
     </div>
