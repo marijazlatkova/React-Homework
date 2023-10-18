@@ -11,25 +11,25 @@ export const Cake = () => {
   const handleActionClick = () => {
     if (quantity <= 0) {
       dispatch(setMessage("Invalid quantity. Please enter a valid quantity."));
+    } else if (actionType === "buy" && quantity > cakes) {
+      dispatch(
+        setMessage(
+          `Not Enough cakes. Only ${cakes} Cake${cakes !== 1 ? "s" : ""} left`
+        )
+      );
     } else {
-      if (actionType === "buy" && quantity > cakes) {
+      if (actionType === "buy") {
+        dispatch(buyCake(quantity));
         dispatch(
-          setMessage(
-            `Not Enough cakes. Only ${cakes} Cake${cakes !== 1 ? "s" : ""} left`
-          )
+          setMessage(`Bought ${quantity} Cake${quantity !== 1 ? "s" : ""}`)
         );
       } else {
-        const action = actionType === "buy" ? buyCake : restockCakes;
-        dispatch(action(quantity));
+        dispatch(restockCakes(quantity));
         dispatch(
-          setMessage(
-            `${actionType === "buy" ? "Bought" : "Restocked"} ${quantity} Cake${
-              quantity !== 1 ? "s" : ""
-            }`
-          )
+          setMessage(`Restocked ${quantity} Cake${quantity !== 1 ? "s" : ""}`)
         );
-        setQuantity(0);
       }
+      setQuantity(0);
     }
   };
 
