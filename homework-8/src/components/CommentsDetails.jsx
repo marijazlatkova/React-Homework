@@ -6,7 +6,11 @@ export const CommentsDetails = () => {
   const navigate = useNavigate();
   const [commentsDetails, setCommentsDetails] = useState({});
   const [edit, setEdit] = useState(false);
-  const [newText, setNewText] = useState("");
+  const [newFields, setNewFields] = useState({
+    text: "",
+    title: "",
+    email: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   let { id } = useParams();
 
@@ -24,27 +28,29 @@ export const CommentsDetails = () => {
       });
   }, [id]);
 
-  async function updateItems(newText) {
+  async function updateItems() {
     try {
       setIsLoading(true);
-      const updatedComment = {
+      const updatedItems = {
         ...commentsDetails,
-        body: newText,
+        name: newFields.title,
+        body: newFields.text,
+        email: newFields.email,
       };
       const res = await axios.put(
         `https://jsonplaceholder.typicode.com/comments/${id}`,
-        updatedComment
+        updatedItems
       );
       if (res.status === 200) {
-        setCommentsDetails(updatedComment);
+        setCommentsDetails(updatedItems);
         setEdit(true);
-        alert("Comment updated successfully");
+        alert("Items updated successfully");
         navigate("/comments");
       } else {
-        alert("Comment failed to update");
+        alert("Items failed to update");
       }
     } catch (err) {
-      alert("Error updating the comment: " + err.message);
+      alert("Error updating items: " + err.message);
     } finally {
       setIsLoading(false);
     }
@@ -52,25 +58,48 @@ export const CommentsDetails = () => {
 
   return (
     <div id="comments-details">
-      <h2>{commentsDetails.name}</h2>
-      <h2>{commentsDetails.email}</h2>
       {isLoading ? (
         <div className="loader-container">
           <i className="fas fa-spinner fa-spin fa-2x"></i>
         </div>
       ) : edit ? (
         <div>
+          <h2>Title:</h2>
+          <input
+            type="text"
+            value={newFields.title}
+            onChange={(e) =>
+              setNewFields({ ...newFields, title: e.target.value })
+            }
+            placeholder="Title"
+          />
+          <h2>Email:</h2>
+          <input
+            type="text"
+            value={newFields.email}
+            onChange={(e) =>
+              setNewFields({ ...newFields, email: e.target.value })
+            }
+            placeholder="Email"
+          />
+          <br />
+          <h2>Comment:</h2>
           <textarea
             cols={30}
             rows={10}
-            value={newText}
-            onChange={(e) => setNewText(e.target.value)}
+            value={newFields.text}
+            onChange={(e) =>
+              setNewFields({ ...newFields, text: e.target.value })
+            }
+            placeholder="Comment"
           />
-          <button onClick={() => updateItems(newText)}>Save</button>
+          <button onClick={updateItems}>Save</button>
           <button onClick={() => setEdit(false)}>Cancel</button>
         </div>
       ) : (
         <div>
+          <h2>Title: {commentsDetails.name}</h2>
+          <h2>Email: {commentsDetails.email}</h2>
           <h2>Comment: {commentsDetails.body}</h2>
           <button onClick={() => setEdit(true)}>Edit</button>
         </div>
