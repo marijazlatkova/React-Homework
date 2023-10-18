@@ -18,23 +18,21 @@ const CalculatorReducer = (state = initialState, action) => {
         operation: action.payload,
       };
     case "CALCULATE_RESULT":
-      const a = Number(state.a);
-      const b = Number(state.b);
       let result;
 
       switch (state.operation) {
         case "+":
-          result = a + b;
+          result = Number(state.a) + Number(state.b);
           break;
         case "-":
-          result = a - b;
+          result = Number(state.a) - Number(state.b);
           break;
         case "*":
-          result = a * b;
+          result = Number(state.a) * Number(state.b);
           break;
         case "/":
-          if (b !== 0) {
-            result = a / b;
+          if (state.b !== "0") {
+            result = Number(state.a) / Number(state.b);
           } else {
             result = "Division by zero is not allowed";
           }
@@ -47,7 +45,6 @@ const CalculatorReducer = (state = initialState, action) => {
         ...state,
         result,
       };
-
     default:
       return state;
   }
