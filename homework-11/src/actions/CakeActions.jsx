@@ -1,21 +1,20 @@
 import {
-  UPDATE_CAKES,
-  SET_QUANTITY,
+  BUY_CAKE,
+  RESTOCK_CAKE,
   SET_MESSAGE,
-  CLEAR_MESSAGE,
 } from "../constants/CakeConstants";
 
-export const updateCakes = (numOfCakes, isRestock) => {
+export const buyCake = (buyQuantity) => {
   return {
-    type: UPDATE_CAKES,
-    payload: { numOfCakes, isRestock },
+    type: BUY_CAKE,
+    payload: buyQuantity,
   };
 };
 
-export const setQuantity = (quantity) => {
+export const restockCakes = (restockQuantity) => {
   return {
-    type: SET_QUANTITY,
-    payload: quantity,
+    type: RESTOCK_CAKE,
+    payload: restockQuantity,
   };
 };
 
@@ -23,11 +22,5 @@ export const setMessage = (message) => {
   return {
     type: SET_MESSAGE,
     payload: message,
-  };
-};
-
-export const clearMessage = () => {
-  return {
-    type: CLEAR_MESSAGE,
   };
 };

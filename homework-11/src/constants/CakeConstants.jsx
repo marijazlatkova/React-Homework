@@ -1,4 +1,3 @@
-export const UPDATE_CAKES = "UPDATE_CAKES";
-export const SET_QUANTITY = "SET_QUANTITY";
+export const BUY_CAKE = "BUY_CAKE";
+export const RESTOCK_CAKE = "RESTOCK_CAKE";
 export const SET_MESSAGE = "SET_MESSAGE";
-export const CLEAR_MESSAGE = "CLEAR_MESSAGE";

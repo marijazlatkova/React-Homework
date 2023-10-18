@@ -1,13 +1,11 @@
 import {
-  UPDATE_CAKES,
-  SET_QUANTITY,
+  BUY_CAKE,
+  RESTOCK_CAKE,
   SET_MESSAGE,
-  CLEAR_MESSAGE,
 } from "../constants/CakeConstants";
 
 const initialState = {
   cakes: 10,
-  quantity: 1,
   //? message: undefined ->
   //* da se dodade varijabla koja koga
   //? ke se klikne poveke torti
@@ -19,29 +17,20 @@ const initialState = {
 
 const CakeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_CAKES:
-      const { numOfCakes, isRestock } = action.payload;
-      const cakes = isRestock ? numOfCakes : -numOfCakes;
-      const newCakes = state.cakes + cakes;
-
+    case BUY_CAKE:
       return {
         ...state,
-        cakes: newCakes,
+        cakes: state.cakes - action.payload,
       };
-    case SET_QUANTITY:
+    case RESTOCK_CAKE:
       return {
         ...state,
-        quantity: action.payload,
+        cakes: state.cakes + action.payload,
       };
     case SET_MESSAGE:
       return {
         ...state,
         message: action.payload,
-      };
-    case CLEAR_MESSAGE:
-      return {
-        ...state,
-        message: undefined,
       };
     default:
       return state;
